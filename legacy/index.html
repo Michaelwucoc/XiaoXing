@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#E8EDF1">
+  <meta name="description" content="异轨：一人走空间，一人改规则。不计时的合作设施解谜，支持键盘、触屏和可选 micro:bit。">
+  <title>异轨 · 合作设施解谜</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23203342'/%3E%3Cpath d='M10 28V12h9v16h11V12' fill='none' stroke='%23e8edf1' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="src/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#field-controls">跳到操作区</a>
+  <div class="app-shell">
+    <header class="app-header">
+      <a class="brand" href="./" aria-label="异轨，游戏首页">
+        <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M7 30V10h12v20h14V10"/><path d="M7 20h26"/></svg>
+        <span class="brand-name">异轨<span class="brand-sub">不同路径，同一目的地。</span></span>
+      </a>
+      <div class="header-actions">
+        <label class="mode-picker"><span class="sr-only">游玩方式</span><select id="play-mode"><option value="duo">同屏双人</option><option value="solo">单人 · 双角色</option></select></label>
+        <button class="subtle-button hardware-button" id="connect-hardware" type="button"><span data-icon="plug"></span><span id="hardware-label">连接 micro:bit</span></button>
+        <button class="icon-button" id="help-button" type="button" aria-label="玩法说明" title="玩法说明"><span data-icon="help"></span></button>
+        <button class="icon-button" id="settings-button" type="button" aria-label="设置" title="设置"><span data-icon="settings"></span></button>
+      </div>
+    </header>
+
+    <nav class="level-nav" aria-label="选择关卡" id="level-nav"></nav>
+
+    <section class="mission-header" aria-labelledby="level-title">
+      <div class="mission-title"><span class="mission-number" id="level-number">01</span><div><h1 id="level-title">断电中转站</h1><p id="level-theme">跨越，然后留下另一条路。</p></div></div>
+      <button class="subtle-button pause-button" id="pause-button" type="button"><span data-icon="pause"></span>暂停 / 休息</button>
+    </section>
+
+    <main class="game-layout">
+      <section class="field-panel" aria-labelledby="field-title">
+        <div class="panel-heading"><h2 id="field-title"><span class="role-badge">A</span>现场</h2><div class="map-tools"><span class="small-note">逐格行动，不计时</span><button id="zoom-map" type="button" aria-pressed="false">放大地图</button></div></div>
+        <div class="map-frame" id="map-frame">
+          <svg id="facility-map" viewBox="0 0 754 522" role="img" tabindex="0" aria-labelledby="map-title map-description">
+            <title id="map-title">设施地图</title><desc id="map-description"></desc><g id="map-content"></g>
+          </svg>
+          <div class="map-instruction">点击地图选择标记位置 · 方向键移动机器人</div>
+        </div>
+        <div class="map-legend" aria-label="地图图例">
+          <span><i class="legend-robot"></i>机器人</span><span><i class="legend-core"></i>数据核心</span><span><i class="legend-route"></i>高架货轨</span><span><i class="legend-bridge"></i>通行设施</span>
+        </div>
+        <div class="objective-strip"><span data-icon="target"></span><div><span class="small-note">共同目标</span><strong id="current-objective"></strong></div><span class="cargo-state" id="cargo-state"></span></div>
+
+        <section class="field-controls" id="field-controls" aria-labelledby="controls-title">
+          <div class="movement-group"><h3 id="controls-title">移动</h3><div class="d-pad" aria-label="机器人方向控制">
+            <button type="button" data-move="up" class="direction up" aria-label="向上移动"><span data-icon="up"></span></button>
+            <button type="button" data-move="left" class="direction left" aria-label="向左移动"><span data-icon="left"></span></button>
+            <span class="d-pad-center" aria-hidden="true"></span>
+            <button type="button" data-move="right" class="direction right" aria-label="向右移动"><span data-icon="right"></span></button>
+            <button type="button" data-move="down" class="direction down" aria-label="向下移动"><span data-icon="down"></span></button>
+          </div><span class="key-hint">W A S D / 方向键</span></div>
+          <div class="interaction-group"><div class="interaction-heading"><h3>现场操作</h3><kbd>E</kbd></div><div id="interactions"></div></div>
+        </section>
+      </section>
+
+      <aside class="system-panel" aria-labelledby="system-title">
+        <div class="panel-heading"><h2 id="system-title"><span class="role-badge system-badge">B</span>调度</h2><span class="small-note">主电源 × 1</span></div>
+        <div class="system-content">
+          <div class="power-source"><span class="source-icon" data-icon="power"></span><div><h3>把电力接到哪里？</h3><p>主电源一次只供应一台设备</p></div></div>
+          <div id="device-controls" class="device-controls"></div>
+          <p class="device-explanation" id="device-explanation">选择设备即可切换供电。先为电桥供电，让机器人进入东侧。</p>
+          <section class="route-section" aria-labelledby="route-title"><div class="section-title"><h3 id="route-title">货运分轨</h3><kbd>R</kbd></div><div id="route-controls"></div><p id="route-description" class="small-note"></p></section>
+          <section id="battery-section" class="battery-section" aria-labelledby="battery-title"><h3 id="battery-title">备用电池</h3><div id="battery-status"></div></section>
+          <div class="system-tip"><span data-icon="info"></span><p id="system-tip">设备不会自行运转。调度方分配电力后，由现场方确认装载与发车。</p></div>
+        </div>
+      </aside>
+    </main>
+
+    <section class="communication-bar" aria-label="无需说话也能交流">
+      <div class="communication-label"><span data-icon="pin"></span><span id="mark-target-label">先点地图，再发送标记</span><select id="mark-target" aria-label="选择标记对象"><option value="">或选择标记对象</option></select></div>
+      <div class="communication-buttons">
+        <button type="button" data-ping="power">这里供电</button><button type="button" data-ping="wait">等一下</button><button type="button" data-ping="ready">准备好了</button><button type="button" data-ping="help">需要帮助</button><button type="button" data-ping="rest">休息一下</button>
+      </div>
+    </section>
+    <div class="feedback-row"><p id="feedback" role="status" aria-live="polite" aria-atomic="true"></p><button type="button" class="clear-mark" id="clear-mark" hidden>清除标记</button></div>
+    <footer class="game-footer"><p>BUILDING SHANGHAI <span>共同参与的游戏实验</span></p><div class="footer-actions"><button class="subtle-button" id="undo-button" type="button"><span data-icon="undo"></span>撤销 <kbd>Z</kbd></button><button class="subtle-button" id="hint-button" type="button"><span data-icon="light"></span>提示</button><button class="subtle-button" id="restart-button" type="button"><span data-icon="restart"></span>重开</button></div></footer>
+  </div>
+  <dialog id="game-dialog" aria-labelledby="dialog-title"><div id="dialog-content"></div></dialog>
+</body>
+</html>

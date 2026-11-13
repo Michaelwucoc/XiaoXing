@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "xiaoxing-delivery",
+      "runtimeExecutable": "/usr/local/bin/node",
+      "runtimeArgs": ["scripts/serve.mjs"],
+      "port": 5173,
+      "url": "http://127.0.0.1:5173"
+    }
+  ]
+}

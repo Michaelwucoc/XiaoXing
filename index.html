@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#bfe8ff">
+  <meta name="description" content="小星快递：把礼物送到朋友身边。没有时间限制、不会失败的温柔解谜小游戏。">
+  <title>小星快递</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 6 l13 27 30 4 -22 21 5 30 -26 -14 -26 14 5 -30 -22 -21 30 -4z' fill='%23ffd23f' stroke='%23e8a317' stroke-width='5' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="src/main.js"></script>
+</head>
+<body>
+  <div class="sky" aria-hidden="true">
+    <div class="night-stars"></div><div class="moon"></div><div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
+    <svg class="hills" viewBox="0 0 1440 260" preserveAspectRatio="none"><path d="M0 170 C220 90 380 210 620 150 C860 90 1040 200 1260 130 C1350 105 1410 120 1440 130 V260 H0Z" fill="var(--hill-back)"/><path d="M0 210 C260 150 460 250 760 200 C1020 160 1200 240 1440 190 V260 H0Z" fill="var(--hill-front)"/></svg>
+  </div>
+
+  <!-- 标题画面 -->
+  <section class="screen" id="screen-title" aria-labelledby="game-title">
+    <div class="title-wrap">
+      <div class="title-hero" id="title-hero"></div>
+      <h1 id="game-title" class="logo">小星快递</h1>
+      <p class="tagline">把礼物，送到朋友身边</p>
+      <div class="mode-toggle" id="mode-toggle" role="group" aria-label="游戏模式">
+        <button type="button" data-mode="easy"><b>简单</b><small>不限步数</small></button>
+        <button type="button" data-mode="normal"><b>普通</b><small>步数挑战 ★★★</small></button>
+      </div>
+      <button class="btn btn-big btn-primary" id="play-button" type="button"></button>
+      <div class="title-actions">
+        <button class="btn btn-blue" id="daily-button" type="button"></button>
+        <button class="btn btn-soft" id="levels-button" type="button"></button>
+        <button class="btn btn-soft" id="wardrobe-button" type="button"></button>
+        <button class="btn btn-soft" id="book-button" type="button"></button>
+        <button class="btn btn-soft" id="stickers-button" type="button"></button>
+        <button class="btn btn-soft" id="microbit-button" type="button"></button>
+        <button class="btn btn-soft" id="settings-button" type="button"></button>
+      </div>
+      <button class="link-button" id="parent-button" type="button">给家长和老师的说明</button>
+    </div>
+    <button class="gift-button" id="gift-button" type="button" hidden></button>
+  </section>
+
+  <!-- 选关 -->
+  <section class="screen" id="screen-levels" hidden aria-labelledby="levels-title">
+    <header class="hud levels-hud">
+      <button class="round-btn" id="levels-back" type="button" aria-label="返回首页"></button>
+      <div class="level-chip"><strong id="levels-title">选择关卡</strong></div>
+      <div class="totals-chip" id="levels-totals"></div>
+    </header>
+    <div class="levels-scroll"><div class="levels-grid" id="levels-grid"></div></div>
+  </section>
+
+  <!-- 游戏画面 -->
+  <section class="screen" id="screen-game" hidden aria-label="游戏">
+    <header class="hud">
+      <button class="round-btn" id="home-button" type="button" aria-label="回到首页"></button>
+      <div class="level-chip"><span id="level-number">第 1 关</span><strong id="level-title"></strong></div>
+      <div class="hud-right">
+        <button class="mb-dot" id="mb-dot" type="button" hidden title="micro:bit 设置与校准"></button>
+        <button class="round-btn" id="rest-button" type="button" aria-label="休息一下"></button>
+      </div>
+    </header>
+
+    <div class="tasks" id="tasks" aria-label="任务清单"></div>
+
+    <div class="coach" id="coach" hidden>
+      <div class="coach-avatar" id="coach-avatar"></div>
+      <p id="coach-text"></p>
+      <button class="speak-btn" id="coach-speak" type="button" aria-label="朗读"></button>
+    </div>
+
+    <div class="stage" id="stage">
+      <svg id="board" class="board" role="img" aria-label="游戏地图"></svg>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </div>
+
+    <footer class="toolbar">
+      <div class="tools">
+        <button class="tool" id="undo-button" type="button"><span class="tool-icon"></span><span>撤销</span></button>
+        <button class="tool" id="restart-button" type="button"><span class="tool-icon"></span><span>重来</span></button>
+        <button class="tool tool-hint" id="hint-button" type="button"><span class="tool-icon"></span><span>提示</span></button>
+        <button class="tool tool-bag" id="tools-button" type="button"><span class="tool-icon"></span><span>道具</span></button>
+      </div>
+      <div class="dpad" id="dpad" aria-label="方向键">
+        <button type="button" data-dir="up" aria-label="向上"></button>
+        <button type="button" data-dir="left" aria-label="向左"></button>
+        <button type="button" data-dir="right" aria-label="向右"></button>
+        <button type="button" data-dir="down" aria-label="向下"></button>
+      </div>
+    </footer>
+  </section>
+
+  <dialog id="modal" aria-labelledby="modal-title"><div class="modal-card" id="modal-card"></div></dialog>
+</body>
+</html>

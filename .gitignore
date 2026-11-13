@@ -1,0 +1,7 @@
+.DS_Store
+node_modules/
+.claude/settings.local.json
+*.log
+
+# 33MB 宣传片成片，不进仓库
+promo/*.mp4
