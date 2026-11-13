@@ -48,6 +48,16 @@ node scripts/serve.mjs
 
 如果提示端口被占用，关掉其他连着 micro:bit 的网页或编辑器再试。没有 micro:bit 也能完整地玩。
 
+## 部署
+
+线上地址：https://awmcedge-c0o6dnbs.edgeone.cool （EdgeOne Makers 项目 `awmcedge`）。
+
+```bash
+node scripts/deploy-edgeone.mjs
+```
+
+脚本只打包 `index.html`、`styles.css`、`src/`、`firmware/`、`promo/`（不含宣传片 mp4）。首次部署的网址带一次性的 `eo_token` 查询参数，访问后会种 3 小时有效期的 Cookie。
+
 ## 测试
 
 ```bash
